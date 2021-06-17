@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爆弾解除ゲーム</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/bombstyle.css" />
+    <link rel="stylesheet" href="css/load.css" />
+</head>
+<body>
+    <!--loading-->
+    <div id="loading">
+        <span>
+            <a>loading</a>
+        </span>
+        <div class="bombnring-print">
+            <div class="bombnring"></div>
+            <div class="bombnring"></div>
+            <div class="bombnring"></div>
+        </div>
+    </div>
+
+    <!--単語データ読み込み-->
+    <script src="script/bombdate.js"></script>
+    <!--グローバル変数/タイマー関数読み込み-->
+    <script src="script/setting.js"></script>
+    <!--デザイン確認用--------------------------------------------------------------------------------->
+    <form>
+        <input type="button" value="Allvisible※test only" id="allv" onclick="Allvisible();" style="font-size: 10px; background-color: red;color: white;">
+        <input type="button" value="Allreset" id="allr" onclick="Allreset();" style="font-size: 10px;display: none;background-color: red;color: white;">
+    </form>
+    <!------------------------------------------------------------------------------------------------>
+    <!--オブジェクト-->
+    <form name="frmset" id="frset">
+        <!--スタートボタン-->
+            <input type="button" name="startBtn" id= "ankiBtn" onclick="this.blur();strGame();" value="記憶開始">
+        <br>
+        <input type="button" name="startBtn" id= "kaijoBtn" style="display: none;" onclick="this.blur();setGame();" value = "解除開始">
+        <br>
+        <!--タイマー表示欄-->
+        <input type="text" name="timer" id="tm" readonly value="">
+        <br>
+        <!--暗記表-->
+        <!--8個の英単語-日本語の表を作成-->
+        <div name="strbl" id="ankihyo" style="display: none;" >
+            <input type="text" name="en" value="1" readonly>
+            <input type="text" name="jp" value="1" readonly>
+            <input type="text" name="en" value="2" readonly>
+            <input type="text" name="jp" value="2" readonly><br>
+            <input type="text" name="en" value="3" readonly>
+            <input type="text" name="jp" value="3" readonly>
+            <input type="text" name="en" value="4" readonly>
+            <input type="text" name="jp" value="4" readonly><br>
+            <input type="text" name="en" value="5" readonly>
+            <input type="text" name="jp" value="5" readonly>
+            <input type="text" name="en" value="6" readonly>
+            <input type="text" name="jp" value="6" readonly><br>
+            <input type="text" name="en" value="7" readonly>
+            <input type="text" name="jp" value="7" readonly>
+            <input type="text" name="en" value="8" readonly>
+            <input type="text" name="jp" value="8" readonly><br>
+        </div>
+        <br>
+        <!--不正解カウンタ表示欄-->
+            <input type="text" name="xcounter" id="xc" readonly value="xcounter" style="display: none;">
+        <br>
+    </form>
+    <!--/frmset-->
+
+    <!--第1モジュール「組み合わせ」object-->
+    <form name="frmodule1" id="1module1">
+        <!--nextカウンタ表示欄-->
+            <input type="text" name="counter" readonly value="hint">
+            <br>
+        <!--解答ボタン-->
+            <!--red-->
+                <input type="button" name="btn" id="redbtn" value=" " style="background:#cd5c5c;" onclick="this.blur(); CheckNum( this.value )">
+            <!--blue-->
+                <input type="button" name="btn" id="blubtn" value=" " style="background:#87cefa;" onclick="this.blur(); CheckNum( this.value )">
+            <!--yellow-->
+                <input type="button" name="btn" id="yerbtn" value=" " style="background:#f0e68c;" onclick="this.blur(); CheckNum( this.value )">
+            <!--green-->
+                <input type="button" name="btn" id="grebtn" value=" " style="background:#98fb98;" onclick="this.blur(); CheckNum( this.value )">
+        <br>
+    </form>
+    <!--第2モジュール「並べ替え」-->
+    <!---->
+    <form name="frmodule2" id="2module2">
+        <input type="text" id="anstxt2" value="" readonly><br>
+        <input type="button" name="btn2" id="b0" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b1" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b2" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b3" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b4" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
+        <input type="button" name="btn2" id="b5" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b6" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b7" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b8" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b9" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
+        <input type="button" name="btn2" id="b10" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b11" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b12" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b13" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b14" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
+        <input type="button" name="btn2" id="b15" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b16" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b17" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b18" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+        <input type="button" name="btn2" id="b19" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
+    </form>
+    <!--第3モジュール「しりとり埋め」-->
+    <form name="frmodule3" id="3module3">
+        <input type="text" id="mo3tx1" readonly value="">
+        <select id ="select1"><option>選択肢</option></select>
+        <select id ="select2"><option>選択肢</option></select>
+        <input type="text" name="mo3tx2" readonly value="">
+    </form>
+    <!--第4モジュール
+    <form-- name="frmodule4" id="4module4">
+
+    </form-->
+    <!--結果表示-->
+    <form id="endfase" style="display: none;">
+        <input type="text" name="result" readonly value="result">
+        <input type="text" id="timeresult" readonly value="time result" style="display: none;">
+        <input type="text" id="missresult" readonly value="miss result" style="display: none;">
+    </form>
+    <!--もう一度、やめるボタン-->
+    <form name="rebtn" style="display: none;">
+        <input type="button" name="re" value="もういっかい！" onclick="location.href='bomb.html'">
+        <input type="button" name="back" value="やめる" onclick="location.href='minigame.html'">
+    </form>
+    <script type="text/javascript">
+
+    /*------------------------------------------*/
+    /*              初期処理                     */
+    /*------------------------------------------*/
+    window.onload = function()
+    {
+        const spinner = document.getElementById('loading');
+        sleep(5,function()
+        {
+            spinner.classList.add('loaded');
+        })
+        Modhidde();
+        document.frmset.timer.value="制限時間：" + ankitime + "秒";
+    }
+    /*------------------------------------------*/
+    /*          ゲーム進行処理                   */
+    /*------------------------------------------*/
+    /*-----------------暗記開始------------------*/
+    function strGame (){
+        document.getElementById("ankiBtn").style.display="none";//記憶開始ボタンを隠す
+        document.getElementById("ankihyo").style.display="block";//暗記表を表示
+        document.getElementById("tm").style.display="block";//タイマーを表示
+        Dateset();//暗記表に単語データをセット
+        strmemoTime = new Date().getTime();
+        memo_timer = setInterval(function (){document.frmset.timer.value = strTime(ankitime);},1);
+    }
+
+    /*--------------解除開始---------------------*/
+    function setGame(){
+        document.getElementById("kaijoBtn").style.display="none";
+        countvisit();
+        document.frmset.xcounter.value = "";
+        document.frmodule1.counter.value = "";
+        misscount = 0;
+        Modvisit();
+        BtnShuff();//モジュール1起動
+        startTime = new Date().getTime();
+        tmr_timer = setInterval(function (){document.frmset.timer.value = playTime(kaijotime);},1);
+        if (misscount == Max_miss){Gameover();}
+    }
+
+    /*----------コンティニュー処理---------------*/
+    function contGame(){
+        if(clear_count<module_count){
+            clear_count++;
+            if(clear_count==module_count){
+                clear_count=0;
+                ClearGame();
+                endGame();
+            }
+        }else{alert(clear_count + "clear_count Error");}
+    }
+
+    /*---------------終了処理--------------------*/
+    function endGame(){
+        Modhidde();
+        clearInterval(tmr_timer);
+        document.getElementById("frset").style.display="none";
+        document.getElementById("xc").style.display="none";
+        document.rebtn.style.display="block";
+    }
+
+    /*--------------クリア処理-------------------*/
+    function ClearGame()
+    {
+        var cleartime = (kaijotime - document.frmset.timer.value).toString();
+        cleartime=cleartime.substr(0,5);
+        document.getElementById("frset").style.display="none";
+        document.getElementById("tm").style.display="none";
+        document.getElementById("timeresult").style.display="block";
+        document.getElementById("timeresult").value="クリア時間：" + cleartime;
+        document.getElementById("xc").style.display="none";
+        document.getElementById("missresult").style.display="block";
+        document.getElementById("missresult").value="ミス：" + misscount;
+        document.getElementById("endfase").style.display="block";
+        document.getElementById("endfase").result.value = "CLEAR!";
+    }
+
+    /*---------------失敗処理--------------------*/
+    function Gameover()
+    {
+        document.getElementById("tm").style.display="none";
+        document.getElementById("endfase").style.display="block";
+        document.getElementById("endfase").result.value = "GameOver";
+        endGame(); //( ゲームを終了 )
+    }
+
+    /*------------------------------------------*/
+    /*           モジュール関連                  */
+    /*------------------------------------------*/
+    /*-------------モジュール1-------------------*/
+    var btnList = document.frmodule1.btn;
+    /********【 関数：ボタンをシャッフルする 】********/
+    function BtnShuff()
+    {
+        var bigList = [];
+        bigList=Shuffle(8, 4);
+        Dateswitch(bigList[0], bigList[1], bigList[2], bigList[3]);
+        var smallList = [];
+        smallList = Shuffle(4, 4);
+        JpListCase(smallList[0], smallList[1], smallList[2], smallList[3]);
+        document.frmset.xcounter.value = "";
+    }
+    //8つから抜き出した4つの単語を保存する
+    function Dateswitch(a, b, c, d)
+    {
+        JpList[0] = JpnList[a];
+        EnList[0] = EngList[a];
+        JpList[1] = JpnList[b];
+        EnList[1] = EngList[b];
+        JpList[2] = JpnList[c];
+        EnList[2] = EngList[c];
+        JpList[3] = JpnList[d];
+        EnList[3] = EngList[d];
+    }
+    //シャッフルした4つの単語を保存する
+    function JpListCase(a,b,c,d)
+    {
+        targetJp = JpList[0];
+        targetEn = EnList[0];
+        btnList[0].value = EnList[a];
+        btnList[1].value = EnList[b];
+        btnList[2].value = EnList[c];
+        btnList[3].value = EnList[d];
+        document.frmodule1.counter.value = targetJp;
+    }
+    function CheckNum(argNum)
+    {
+        if (argNum == targetEn)
+        {
+            khi = khi + 1;
+            targetJp = JpList[khi];
+            targetEn = EnList[khi];
+            document.frmodule1.counter.value = targetJp;
+        } else
+        {
+            document.frmset.xcounter.value += "x";
+            khi = 0;
+            targetJp = JpList[khi];
+            targetEn=EnList[khi]
+            misscount++;
+            document.frmodule1.counter.value = targetJp;
+        }
+        if (khi ==4)
+        {
+            khi = 0;
+            targetJp = JpList[khi];
+            targetEn = EnList[khi];
+            document.frmodule1.counter.style.display = "none";
+            document.getElementById("redbtn").value = "O";
+            document.getElementById("blubtn").value = "  ";
+            document.getElementById("yerbtn").value = "  ";
+            document.getElementById("grebtn").value = "  ";
+            document.getElementById("redbtn").disabled = true;
+            document.getElementById("blubtn").disabled = true;
+            document.getElementById("yerbtn").disabled = true;
+            document.getElementById("grebtn").disabled = true;
+            contGame();
+            M2game();
+        }
+        if (misscount == Max_miss){Gameover();}
+    }
+    /*-------------モジュール2-------------------*/
+    var btn2List = document.frmodule2.btn2;
+    var btn2subList = [];
+    var btn2sub2List = [];
+    var txtvalue;
+    function M2game()
+    {
+        mo2len = EngList[randmod2].length;
+        for (var i = 0; i < mo2len; i++)
+        {
+            document.frmodule2.anstxt2.value += "?";
+        }
+        txtvalue = document.frmodule2.anstxt2.value;
+        for (var i = 0; i < 20; i++)
+        {
+            if (i > mo2len || i==0)
+            {
+                btn2subList[i] = "  ";
+            } else
+            {
+                btn2subList[i] = EngList[randmod2].substr(i-1,1);
+            }
+        }
+        btn2sub2List = Shuffle(20, 20);
+        for (var i = 0; i < 20; i++)
+        {
+            var k = btn2sub2List[i];
+            btn2List[i].value = btn2subList[k];
+            if (btn2List[i].value != "  ")
+            {
+                document.getElementById("b" + i).disabled = false;
+                document.getElementById("b"+i).style.backgroundColor = "#ffa07a";
+            }
+        }
+    }
+    function Checkkey(argNum ,argId)
+    {
+        if (argNum == EngList[randmod2].substr(substrNum, 1))
+        {
+            document.frmodule2.anstxt2.value = strIns(document.frmodule2.anstxt2.value,substrNum,argNum);
+            substrNum++;
+            document.getElementById(argId).disabled = true;
+        } else
+        {
+            document.frmset.xcounter.value += "x";
+            misscount++;
+        }
+        if (substrNum==mo2len)
+        {
+            //clear
+            document.frmodule2.anstxt2.value = EngList[randmod2];
+            document.getElementById("blubtn").value = "O";
+            Modvisit();
+            contGame();
+            M3game();
+        }
+        if (misscount == Max_miss){Gameover();}
+    }
+    /*-------------モジュール3-------------------*/
+    function M3game()
+    {
+        var srctbox1 = document.getElementById("select1");
+        var srctbox2 = document.getElementById("select2");
+        for(var i = 0; i <8; i++){
+            var option = document.createElement('option');
+            option.setAttribute('value', i);
+            option.innerHTML = EngShuffleList[i];
+            srctbox1.appendChild(option);
+        }
+        for(var i = 0; i <8; i++){
+            var option = document.createElement('option');
+            option.setAttribute('value', i);
+            option.innerHTML = EngShuffleList[i];
+            srctbox2.appendChild(option);
+        }
+        if(l%2==0){
+            Mo3str(0);
+            }else{
+            Mo3str(1);
+            }
+    }
+    function Mo3str(Num)
+    {
+        document.frmodule3.mo3tx1.value = JpnList[Num];
+        document.frmodule3.mo3tx2.value = JpnList[Num+6];
+        document.getElementById("select1").addEventListener('change', function ()
+        {
+            var idx1 = document.getElementById("select1").selectedIndex;
+            if(document.getElementById("select1").options[idx1].text == EngList[Num+2] && flg_mo3==1)
+            {
+                document.getElementById("select1").disabled = true;
+                document.getElementById("select2").disabled = true;
+                contGame();
+            }else if(document.getElementById("select1").options[idx1].text == EngList[Num+2]){
+            flg_mo3++;
+            }else{
+                document.frmset.xcounter.value += "x";
+                misscount++;
+                if (misscount == Max_miss){Gameover();}
+            }
+        })
+            document.getElementById("select2").addEventListener('change', function ()
+        {
+            var idx2 = document.getElementById("select2").selectedIndex;
+            if(document.getElementById("select2").options[idx2].text == EngList[Num+4] && flg_mo3 ==1)
+            {
+                document.getElementById("select1").disabled = true;
+                document.getElementById("select2").disabled = true;
+                contGame();
+            }else if(document.getElementById("select2").options[idx2].text == EngList[Num+4]){
+            flg_mo3++;
+            }else{
+                document.frmset.xcounter.value += "x";
+                misscount++;
+                //gameover
+                        if (misscount == Max_miss){Gameover();}
+            }
+        })
+    }
+    /*------------------------------------------*/
+    /*                 関数                     */
+    /*------------------------------------------*/
+    /*Shuffle([全体数],[シャッフルした全体から指定数を抜き出す])*/
+    function Shuffle(big,small)
+    {
+        const listNum = new Array;
+        for(var i=0;i<big;i++){
+        listNum.push(i);
+        }
+        const testList = [];
+        for (var i = 0; i < small; i++)
+        {
+            const randtest = Math.floor(listNum.length * Math.random());
+            testList[i] = listNum[randtest];
+            listNum.splice(randtest, 1);
+            }
+        return testList;
+    }
+    /*strIns([文字列],[入れ替えたい場所],[入れ変えたい文字])*/
+    function strIns(str, idx, val){
+        var res = str.slice(0, idx) + val + str.slice(idx + 1);
+        return res;
+    };
+    /*sleep([待ち時間],[関数])*/
+    function sleep(waitSec, callbackFunc) {
+        // 経過時間（秒）
+        var spanedSec = 0;
+        // 1秒間隔で無名関数を実行
+        var id = setInterval(function () {
+        spanedSec++;
+        // 経過時間 >= 待機時間の場合、待機終了。
+        if (spanedSec >= waitSec) {
+            // タイマー停止
+            clearInterval(id);
+            // 完了時、コールバック関数を実行
+            if (callbackFunc) callbackFunc();
+        }
+    }, 1000);
+}
+    /*------------------------------------------*/
+    /*           単語データ関連                  */
+    /*------------------------------------------*/
+    /*-------単語データを配列に保存する関数-------*/
+    function Dateset(){
+        //EngList,JpnListに単語を保存
+        for (var i = 0; i < 8; i++)
+        {
+            var j=l+i;
+            EngList[i] = dateEn[j];
+            JpnList[i] = dateJp[j];
+        }
+        var EngObjList = document.frmset.en;//暗記表のオブジェクトの配列を取得(英語)
+        var JpnObjList = document.frmset.jp;//暗記表のオブジェクトの配列を取得(日本語)
+        var dshlist=[];//一時的に保存する配列を作製
+        dshlist=Shuffle(8,8);//0～8をランダム順に並べた配列を保存
+        Dateshufeight(dshlist[0],dshlist[1],dshlist[2],dshlist[3],dshlist[4],dshlist[5],dshlist[6],dshlist[7]);//単語をランダムに配置する
+        for(var i=0;i<8;i++)
+        {
+            EngObjList[i].value=EngShuffleList[i];//
+            JpnObjList[i].value=JpnShuffleList[i];//
+        }
+    }
+    /*-------単語をa→h順に保存する関数---------*/
+    function Dateshufeight(a,b,c,d,e,f,g,h){
+        EngShuffleList[0]=EngList[a];
+        JpnShuffleList[0]=JpnList[a];
+        EngShuffleList[1]=EngList[b];
+        JpnShuffleList[1]=JpnList[b];
+        EngShuffleList[2]=EngList[c];
+        JpnShuffleList[2]=JpnList[c];
+        EngShuffleList[3]=EngList[d];
+        JpnShuffleList[3]=JpnList[d];
+        EngShuffleList[4]=EngList[e];
+        JpnShuffleList[4]=JpnList[e];
+        EngShuffleList[5]=EngList[f];
+        JpnShuffleList[5]=JpnList[f];
+        EngShuffleList[6]=EngList[g];
+        JpnShuffleList[6]=JpnList[g];
+        EngShuffleList[7]=EngList[h];
+        JpnShuffleList[7]=JpnList[h];
+    }
+    /*------------------------------------------*/
+    /*       オブジェクト表示/非表示関連          */
+    /*------------------------------------------*/
+    function countvisit(){
+        document.frmodule1.counter.style.display="block";
+        document.getElementById("xc").style.display="block";
+    }
+    function Modvisit()
+    {
+        for(var i=0;i<20;i++){
+            document.getElementById("b" + i).disabled = true;
+        }
+        document.getElementById("1module1").style.display="block";
+        document.getElementById("2module2").style.display="block";
+        document.getElementById("3module3").style.display="block";
+        //document.getElementById("4module4").style.display="block";
+    }
+    function Modhidde()
+    {
+        for(var i=0;i<20;i++){
+            document.getElementById("b" + i).disabled = true;
+        }
+        document.getElementById("1module1").style.display="none";
+        document.getElementById("2module2").style.display="none";
+        document.getElementById("3module3").style.display="none";
+        //document.getElementById("4module4").style.display="none";
+    }
+    /*------------デザイン確認用-----------------*/
+    function Allvisible(){
+        document.getElementById("timeresult").style.display="block";
+        document.getElementById("missresult").style.display="block";
+        document.getElementById("endfase").style.display="block";
+        document.getElementById("allv").style.display="none";
+        document.getElementById("allr").style.display="block";
+        document.getElementById("frset").style.display="block";
+        document.getElementById("ankiBtn").style.display="block";
+        document.getElementById("kaijoBtn").style.display="block";
+        document.getElementById("tm").style.display="block";
+        document.getElementById("ankihyo").style.display="block";
+        document.getElementById("xc").style.display="block";
+        document.getElementById("1module1").style.display="block";
+        document.getElementById("2module2").style.display="block";
+        document.getElementById("3module3").style.display="block";
+        //document.getElementById("4module4").style.display="block";
+        document.rebtn.style.display="block";
+    }
+    function Allreset(){
+        document.getElementById("timeresult").style.display="none";
+        document.getElementById("missresult").style.display="none";
+        document.getElementById("endfase").style.display="none";
+        document.getElementById("allv").style.display="block";
+        document.getElementById("allr").style.display="none";
+        document.getElementById("frset").style.display="block";
+        document.getElementById("ankiBtn").style.display="block";
+        document.getElementById("kaijoBtn").style.display="none";
+        document.getElementById("tm").style.display="none";
+        document.getElementById("ankihyo").style.display="none";
+        document.getElementById("xc").style.display="none";
+        document.getElementById("1module1").style.display="none";
+        document.getElementById("2module2").style.display="none";
+        document.getElementById("3module3").style.display="none";
+        //document.getElementById("4module4").style.display="none";
+        document.rebtn.style.display="none";
+    }
+    /*------------------------------------------*/
+    </script>
+</body>
+</html>

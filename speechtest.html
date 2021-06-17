@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+        <a>音声テスト (以下のテキストボックスに読んでほしい単語を入力→speech testを押す)</a>
+        <br>
+		<p><input type="button" value="Hello Worldっていうやつ" onclick="speechtest('Hello World');"></p>
+        <input type="text" id="sptest" value="test" style="width: 98%;">
+        <p><input type="button" value="テキストボックス読み上げ" onclick="speechtest();"></p>
+    </div>
+	<p>負荷テスト(各表を押すと自動入力されます)</p>
+	<table id="tbl" border = "1">
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">test book</td>
+			<td onclick="clicktest(this.innerHTML);">Yes!We can do it!</td>
+		</tr>
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">To succeed in life, you need two things; ignorance and confidence.</td>
+			<td onclick="clicktest(this.innerHTML);">Once you stop learning, you start dying.</td>
+		</tr>
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">Nothing in life is to be feared. It is only to be understood.</td>
+			<td onclick="clicktest(this.innerHTML);">If your dreams do not scare you, they are not big enough.</td>
+		</tr>
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">In order to realize our true self we must be willing to live without being dependant upon the opinion of others.</td>
+			<td onclick="clicktest(this.innerHTML);">If today were the last day of your life, would you want to do what you are about to do today.</td>
+		</tr>
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">It is not the strongest of the species that survives, nor the most intelligent that survives. It is the one that is most adaptable to change.</td>
+			<td onclick="clicktest(this.innerHTML);">I’m a success today because I had a friend who believed in me and I didn’t have the heart to let him down.</td>
+		</tr>
+		<tr>
+			<td onclick="clicktest(this.innerHTML);">If you don’t like where you are, change it. You’re not a tree.</td>
+			<td onclick="clicktest(this.innerHTML);">I never lose. I either win or learn.</td>
+		</tr>
+	</table>
+	<script>
+	function speechtest(str){
+        const uttr = new SpeechSynthesisUtterance(); //これがAPI
+		if(str == null){
+				uttr.text=document.getElementById("sptest").value; //id="sptest"のテキストボックスにある文字列を読み上げるよ!
+		}else{
+			uttr.text=str; //13行目の文字列("Hello World")を読み上げるよ!
+		}
+		//各ブラウザで読み上げてくれる機械音声を探すよ！
+		//Chrome
+        var voice = speechSynthesis.getVoices().find(function(voice){
+            return voice.name === 'Google UK English Male'; //機械音声リストの中に「Google UK English Male」君がいたらその名前を返すよ！
+        });
+		//safari
+        var name= speechSynthesis.getVoices().find(function(voice){
+            return voice.name === 'Alex'; //機械音声リストの中に「Alex」君がいたらその名前を返すよ！
+        });
+        if(voice){uttr.voice=voice;}else if(name){uttr.voice=name;}else{uttr.lang="en-US";} //「Google UK English Male」君がいたら「Google UK English Male」君に、「Alex」君がいたら「Alex」君に、どっちもいなかったらネイティブっぽく言ってもらう
+        speechSynthesis.speak(uttr); //再生開始
+    }
+	//自動入力
+	function clicktest(str){
+		//alert(str);
+        document.getElementById("sptest").value=str;
+        }
+	</script>
+</body>
+</html>

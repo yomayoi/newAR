@@ -1,0 +1,19 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    position:static;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    overflow: hidden;
+}
+@font-face {
+    font-family: 'PMplusRr';
+    src: url(PixelMplus12-Regular.ttf);
+}
+input[name="timer"],input[name="counter"]{
+    font-family: 'PmplusRr';
+}
