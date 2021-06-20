@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/load.css" />
 </head>
 <body>
-    <!--loading-->
+    <!--loading画面-->
     <div id="loading">
         <span>
             <a>loading</a>
@@ -18,9 +18,9 @@
         <div class="bombnring-print">
             <div class="bombnring"></div>
             <div class="bombnring"></div>
-            <div class="bombnring"></div>
         </div>
     </div>
+    <!--/loading-->
 
     <!--単語データ読み込み-->
     <script src="script/bombdate.js"></script>
@@ -32,95 +32,169 @@
         <input type="button" value="Allreset" id="allr" onclick="Allreset();" style="font-size: 10px;display: none;background-color: red;color: white;">
     </form>
     <!------------------------------------------------------------------------------------------------>
-    <!--オブジェクト-->
-    <form name="frmset" id="frset">
-        <!--スタートボタン-->
-            <input type="button" name="startBtn" id= "ankiBtn" onclick="this.blur();strGame();" value="記憶開始">
-        <br>
-        <input type="button" name="startBtn" id= "kaijoBtn" style="display: none;" onclick="this.blur();setGame();" value = "解除開始">
-        <br>
-        <!--タイマー表示欄-->
-        <input type="text" name="timer" id="tm" readonly value="">
-        <br>
-        <!--暗記表-->
-        <!--8個の英単語-日本語の表を作成-->
-        <div name="strbl" id="ankihyo" style="display: none;" >
-            <input type="text" name="en" value="1" readonly>
-            <input type="text" name="jp" value="1" readonly>
-            <input type="text" name="en" value="2" readonly>
-            <input type="text" name="jp" value="2" readonly><br>
-            <input type="text" name="en" value="3" readonly>
-            <input type="text" name="jp" value="3" readonly>
-            <input type="text" name="en" value="4" readonly>
-            <input type="text" name="jp" value="4" readonly><br>
-            <input type="text" name="en" value="5" readonly>
-            <input type="text" name="jp" value="5" readonly>
-            <input type="text" name="en" value="6" readonly>
-            <input type="text" name="jp" value="6" readonly><br>
-            <input type="text" name="en" value="7" readonly>
-            <input type="text" name="jp" value="7" readonly>
-            <input type="text" name="en" value="8" readonly>
-            <input type="text" name="jp" value="8" readonly><br>
+    <!--オブジェクト----------------------------------------------------------------------------------->
+    <div class="content">
+        <form id="strbtns">
+            <!--スタートボタン-->
+            <input type="button" id= "ankiBtn" onclick="this.blur();strGame();" value="記憶開始">
+            <input type="button" id= "kaijoBtn" style="display: none;" onclick="this.blur();setGame();" value = "解除開始">
+        </form>
+        <!--/strbtns-->
+    </div>
+    <div class="ankihyo">
+        <form name="hyo">
+            <!--暗記表-->
+            <input type="text" id="tm2" readonly value="">
+            <!--8個の英単語-日本語の表を作成-->
+            <div id="ankihyo" style="display: none;" >
+                <input type="text" name="en" value="1" readonly>
+                <input type="text" name="jp" value="1" readonly>
+                <input type="text" name="en" value="2" readonly>
+                <input type="text" name="jp" value="2" readonly>
+                <input type="text" name="en" value="3" readonly>
+                <input type="text" name="jp" value="3" readonly>
+                <input type="text" name="en" value="4" readonly>
+                <input type="text" name="jp" value="4" readonly>
+                <input type="text" name="en" value="5" readonly>
+                <input type="text" name="jp" value="5" readonly>
+                <input type="text" name="en" value="6" readonly>
+                <input type="text" name="jp" value="6" readonly>
+                <input type="text" name="en" value="7" readonly>
+                <input type="text" name="jp" value="7" readonly>
+                <input type="text" name="en" value="8" readonly>
+                <input type="text" name="jp" value="8" readonly>
+            </div>
+        </form>
+    </div>
+    <!--/hyo-->
+    <div id="moduleObj" style="display: none;">
+        <div class="obj-flex">
+            <div class="content-flex">
+                <div class="contents">
+                    <div class="clearmodulepare">
+                            <div class="clearmodule"></div>
+                            <div class="clearmodulechi" id="lightmo0"></div>
+                    </div>
+                    <form name="frmset" id="frset">
+                        <!--タイマー表示欄-->
+                        <input type="text" id="tm" readonly value="--.--">
+                        <!--不正解カウンタ表示欄-->
+                        <input type="text" id="xc" readonly value="-----" style="display: none;">
+                    </form>
+                    <!--/form id="frset"-->
+                </div>
+                <!--/contents-->
+                <!--第1モジュール「組み合わせ」object--------------------------------------------------------------->
+                <div class="contents">
+                    <div class="clearmodulepare">
+                        <div class="clearmodule"></div>
+                        <div class="clearmodulechi"  id="lightmo1"></div>
+                    </div>
+                    <form id="1module1">
+                        <div class="module1-flex">
+                            <!--nextカウンタ表示欄-->
+                            <input type="text" id="counter" readonly value="hint">
+                            <!--解答ボタン-->
+                            <div class="module1-btn-flex-group">
+                                <div class="module1-btn-flex">
+                                    <input type="button" name="btn" id="redbtn" value=" " onclick="this.blur(); CheckNum( this.value )">
+                                    <input type="button" name="btn" id="blubtn" value=" " onclick="this.blur(); CheckNum( this.value )">
+                                </div>
+                                <div class="module1-btn-flex">
+                                    <input type="button" name="btn" id="yerbtn" value=" " onclick="this.blur(); CheckNum( this.value )">
+                                    <input type="button" name="btn" id="grebtn" value=" " onclick="this.blur(); CheckNum( this.value )">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--/contents-->
+            </div>
+            <!--/content-flex-->
+            <!--第2モジュール「並べ替え」----------------------------------------------------------------------->
+            <!---->
+            <div class="content-flex">
+                <div class="contents">
+                    <div class="clearmodulepare">
+                        <div class="clearmodule"></div>
+                        <div class="clearmodulechi" id="lightmo2"></div>
+                    </div>
+                    <form id="2module2">
+                        <div class="module2-flex">
+                            <input type="text" id="anstxt2" value="" readonly>
+                            <div class="module2-btn-flex-group">
+                                <div class="module2-btn2-flex">
+                                    <input type="button" name="btn2" id="b0" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b1" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b2" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b3" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b4" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                </div>
+                                <div class="module2-btn2-flex">
+                                    <input type="button" name="btn2" id="b5" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b6" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b7" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b8" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b9" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                </div>
+                                <div class="module2-btn2-flex">
+                                    <input type="button" name="btn2" id="b10" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b11" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b12" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b13" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b14" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                </div>
+                                <div class="module2-btn2-flex">
+                                    <input type="button" name="btn2" id="b15" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b16" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b17" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b18" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                    <input type="button" name="btn2" id="b19" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--/contents-->
+                <!--第3モジュール「しりとり埋め」------------------------------------------------------------------->
+                <div class="contents">
+                    <div class="clearmodulepare">
+                        <div class="clearmodule"></div>
+                        <div class="clearmodulechi" id="lightmo3"></div>
+                    </div>
+                    <form id="3module3">
+                        <div class="module3-flex">
+                            <div class="module3-txt-flex">
+                                <input type="text" id="mo3tx1" readonly value="──────────────">
+                                <div class="module3arrow" name="bluearrow"></div>
+                            </div>
+                            <div class="module3-txt-flex">
+                                <div class="module3arrow" name="bluearrow"></div>
+                                <select id ="select1"><option id="op1"></option></select>
+                                <div class="module3arrow" name="greenarrow"></div>
+                            </div>
+                            <div class="module3-txt-flex">
+                                <div class="module3arrow" name="greenarrow"></div>
+                                <select id ="select2"><option id="op2"></option></select>
+                                <div class="module3arrow" name="redarrow"></div>
+                            </div>
+                            <div class="module3-txt-flex">
+                                <div class="module3arrow" name="redarrow"></div>
+                                <input type="text" id="mo3tx2" readonly value="──────────────">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--/contents-->
+            </div>
+            <!--content-flex-->
+            <!--第4モジュール
+            <form-- name="frmodule4" id="4module4">
+
+            </form-->
         </div>
-        <br>
-        <!--不正解カウンタ表示欄-->
-            <input type="text" name="xcounter" id="xc" readonly value="xcounter" style="display: none;">
-        <br>
-    </form>
-    <!--/frmset-->
-
-    <!--第1モジュール「組み合わせ」object-->
-    <form name="frmodule1" id="1module1">
-        <!--nextカウンタ表示欄-->
-            <input type="text" name="counter" readonly value="hint">
-            <br>
-        <!--解答ボタン-->
-            <!--red-->
-                <input type="button" name="btn" id="redbtn" value=" " style="background:#cd5c5c;" onclick="this.blur(); CheckNum( this.value )">
-            <!--blue-->
-                <input type="button" name="btn" id="blubtn" value=" " style="background:#87cefa;" onclick="this.blur(); CheckNum( this.value )">
-            <!--yellow-->
-                <input type="button" name="btn" id="yerbtn" value=" " style="background:#f0e68c;" onclick="this.blur(); CheckNum( this.value )">
-            <!--green-->
-                <input type="button" name="btn" id="grebtn" value=" " style="background:#98fb98;" onclick="this.blur(); CheckNum( this.value )">
-        <br>
-    </form>
-    <!--第2モジュール「並べ替え」-->
-    <!---->
-    <form name="frmodule2" id="2module2">
-        <input type="text" id="anstxt2" value="" readonly><br>
-        <input type="button" name="btn2" id="b0" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b1" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b2" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b3" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b4" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
-        <input type="button" name="btn2" id="b5" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b6" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b7" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b8" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b9" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
-        <input type="button" name="btn2" id="b10" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b11" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b12" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b13" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b14" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
-        <input type="button" name="btn2" id="b15" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b16" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b17" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b18" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )">
-        <input type="button" name="btn2" id="b19" value="  " onclick=" this.blur(); Checkkey( this.value,this.id )"><br>
-    </form>
-    <!--第3モジュール「しりとり埋め」-->
-    <form name="frmodule3" id="3module3">
-        <input type="text" id="mo3tx1" readonly value="">
-        <select id ="select1"><option>選択肢</option></select>
-        <select id ="select2"><option>選択肢</option></select>
-        <input type="text" name="mo3tx2" readonly value="">
-    </form>
-    <!--第4モジュール
-    <form-- name="frmodule4" id="4module4">
-
-    </form-->
+        <!--/obj-flex-->
+    </div>
     <!--結果表示-->
     <form id="endfase" style="display: none;">
         <input type="text" name="result" readonly value="result">
@@ -137,40 +211,45 @@
     /*------------------------------------------*/
     /*              初期処理                     */
     /*------------------------------------------*/
-    window.onload = function()
+    document.addEventListener('DOMContentLoaded', function()
     {
-        const spinner = document.getElementById('loading');
-        sleep(5,function()
-        {
-            spinner.classList.add('loaded');
-        })
+        sleep(5,function(){
+            document.getElementById('loading').style.display="none";
+        });
         Modhidde();
-        document.frmset.timer.value="制限時間：" + ankitime + "秒";
-    }
+        document.getElementById("tm2").value="制限時間：" + ankitime + "秒";
+    });
     /*------------------------------------------*/
     /*          ゲーム進行処理                   */
     /*------------------------------------------*/
     /*-----------------暗記開始------------------*/
     function strGame (){
-        document.getElementById("ankiBtn").style.display="none";//記憶開始ボタンを隠す
+        //document.getElementById("ankiBtn").style.display="none";//記憶開始ボタンを隠す
         document.getElementById("ankihyo").style.display="block";//暗記表を表示
-        document.getElementById("tm").style.display="block";//タイマーを表示
+        document.getElementById("tm2").style.display="block";//タイマーを表示
         Dateset();//暗記表に単語データをセット
         strmemoTime = new Date().getTime();
-        memo_timer = setInterval(function (){document.frmset.timer.value = strTime(ankitime);},1);
+        memo_timer = setInterval(function (){document.getElementById("tm2").value = strTime(ankitime);},1);
     }
 
     /*--------------解除開始---------------------*/
     function setGame(){
-        document.getElementById("kaijoBtn").style.display="none";
+        //document.getElementById("strbtns").style.display="none";
         countvisit();
-        document.frmset.xcounter.value = "";
-        document.frmodule1.counter.value = "";
+        document.getElementById("xc").value = "";
+        document.getElementById("counter").value = "";
+        document.getElementById("op1").innerHTML = "──────────────";
+        document.getElementById("op2").innerHTML = "──────────────";
+        var elements = document.getElementsByClassName('contents');
+        for(var i=0;i<elements.length;i++){
+            elements[i].style.display="block";
+        }
         misscount = 0;
         Modvisit();
         BtnShuff();//モジュール1起動
+        M2game();//モジュール2起動
         startTime = new Date().getTime();
-        tmr_timer = setInterval(function (){document.frmset.timer.value = playTime(kaijotime);},1);
+        tmr_timer = setInterval(function (){document.getElementById("tm").value = playTime(kaijotime);},1);
         if (misscount == Max_miss){Gameover();}
     }
 
@@ -179,52 +258,62 @@
         if(clear_count<module_count){
             clear_count++;
             if(clear_count==module_count){
-                clear_count=0;
-                ClearGame();
-                endGame();
+                clearInterval(tmr_timer);
+                sleep(0.5,function(){
+                    clear_count=0;
+                    document.getElementById("lightmo0").style.background = "transparent radial-gradient(#b7ffb7 , #7fff00 )"
+                    ClearGame();
+                });
+            }else if(clear_count == module_count-1){
+                document.getElementById("op1").innerHTML = "選択肢";
+                document.getElementById("op2").innerHTML = "選択肢";
+                M3game();
             }
         }else{alert(clear_count + "clear_count Error");}
-    }
-
-    /*---------------終了処理--------------------*/
-    function endGame(){
-        Modhidde();
-        clearInterval(tmr_timer);
-        document.getElementById("frset").style.display="none";
-        document.getElementById("xc").style.display="none";
-        document.rebtn.style.display="block";
     }
 
     /*--------------クリア処理-------------------*/
     function ClearGame()
     {
-        var cleartime = (kaijotime - document.frmset.timer.value).toString();
+        sleep(0.5,function (){
+        var cleartime = (kaijotime - document.getElementById("tm").value).toString();
         cleartime=cleartime.substr(0,5);
-        document.getElementById("frset").style.display="none";
-        document.getElementById("tm").style.display="none";
+        //document.getElementById("frset").style.display="none";
+        //document.getElementById("tm").style.display="none";
         document.getElementById("timeresult").style.display="block";
         document.getElementById("timeresult").value="クリア時間：" + cleartime;
-        document.getElementById("xc").style.display="none";
+        //document.getElementById("xc").style.display="none";
         document.getElementById("missresult").style.display="block";
         document.getElementById("missresult").value="ミス：" + misscount;
         document.getElementById("endfase").style.display="block";
         document.getElementById("endfase").result.value = "CLEAR!";
+        endGame();
+        });
     }
 
     /*---------------失敗処理--------------------*/
     function Gameover()
     {
-        document.getElementById("tm").style.display="none";
+        clearInterval(tmr_timer);
+        //document.getElementById("tm").style.display="none";
         document.getElementById("endfase").style.display="block";
         document.getElementById("endfase").result.value = "GameOver";
         endGame(); //( ゲームを終了 )
+    }
+
+    /*---------------終了処理--------------------*/
+    function endGame(){
+        Modhidde();
+        //document.getElementById("frset").style.display="none";
+        //document.getElementById("xc").style.display="none";
+        document.rebtn.style.display="block";
     }
 
     /*------------------------------------------*/
     /*           モジュール関連                  */
     /*------------------------------------------*/
     /*-------------モジュール1-------------------*/
-    var btnList = document.frmodule1.btn;
+    var btnList = document.getElementById("1module1").btn;
     /********【 関数：ボタンをシャッフルする 】********/
     function BtnShuff()
     {
@@ -234,7 +323,7 @@
         var smallList = [];
         smallList = Shuffle(4, 4);
         JpListCase(smallList[0], smallList[1], smallList[2], smallList[3]);
-        document.frmset.xcounter.value = "";
+        document.getElementById("xc").value = "";
     }
     //8つから抜き出した4つの単語を保存する
     function Dateswitch(a, b, c, d)
@@ -257,7 +346,7 @@
         btnList[1].value = EnList[b];
         btnList[2].value = EnList[c];
         btnList[3].value = EnList[d];
-        document.frmodule1.counter.value = targetJp;
+        document.getElementById("counter").value = targetJp;
     }
     function CheckNum(argNum)
     {
@@ -266,37 +355,34 @@
             khi = khi + 1;
             targetJp = JpList[khi];
             targetEn = EnList[khi];
-            document.frmodule1.counter.value = targetJp;
+            document.getElementById("counter").value = targetJp;
         } else
         {
-            document.frmset.xcounter.value += "x";
+            document.getElementById("xc").value += "x";
             khi = 0;
             targetJp = JpList[khi];
             targetEn=EnList[khi]
             misscount++;
-            document.frmodule1.counter.value = targetJp;
+            document.getElementById("counter").value = targetJp;
         }
         if (khi ==4)
         {
             khi = 0;
             targetJp = JpList[khi];
             targetEn = EnList[khi];
-            document.frmodule1.counter.style.display = "none";
-            document.getElementById("redbtn").value = "O";
-            document.getElementById("blubtn").value = "  ";
-            document.getElementById("yerbtn").value = "  ";
-            document.getElementById("grebtn").value = "  ";
+            document.getElementById("lightmo1").style.background = "transparent radial-gradient(#b7ffb7 , #7fff00 )";
+            document.getElementById("counter").value = "  ";
             document.getElementById("redbtn").disabled = true;
             document.getElementById("blubtn").disabled = true;
             document.getElementById("yerbtn").disabled = true;
             document.getElementById("grebtn").disabled = true;
             contGame();
-            M2game();
+            //M2game();
         }
         if (misscount == Max_miss){Gameover();}
     }
     /*-------------モジュール2-------------------*/
-    var btn2List = document.frmodule2.btn2;
+    var btn2List = document.getElementById("2module2").btn2;
     var btn2subList = [];
     var btn2sub2List = [];
     var txtvalue;
@@ -305,9 +391,9 @@
         mo2len = EngList[randmod2].length;
         for (var i = 0; i < mo2len; i++)
         {
-            document.frmodule2.anstxt2.value += "?";
+            document.getElementById("anstxt2").value += "?";
         }
-        txtvalue = document.frmodule2.anstxt2.value;
+        txtvalue = document.getElementById("anstxt2").value;
         for (var i = 0; i < 20; i++)
         {
             if (i > mo2len || i==0)
@@ -334,22 +420,21 @@
     {
         if (argNum == EngList[randmod2].substr(substrNum, 1))
         {
-            document.frmodule2.anstxt2.value = strIns(document.frmodule2.anstxt2.value,substrNum,argNum);
+            document.getElementById("anstxt2").value = strIns(document.getElementById("anstxt2").value,substrNum,argNum);
             substrNum++;
             document.getElementById(argId).disabled = true;
         } else
         {
-            document.frmset.xcounter.value += "x";
+            document.getElementById("xc").value += "x";
             misscount++;
         }
         if (substrNum==mo2len)
         {
             //clear
-            document.frmodule2.anstxt2.value = EngList[randmod2];
-            document.getElementById("blubtn").value = "O";
+            document.getElementById("lightmo2").style.background = "transparent radial-gradient(#b7ffb7 , #7fff00 )";
+            document.getElementById("anstxt2").value = EngList[randmod2];
             Modvisit();
             contGame();
-            M3game();
         }
         if (misscount == Max_miss){Gameover();}
     }
@@ -378,8 +463,8 @@
     }
     function Mo3str(Num)
     {
-        document.frmodule3.mo3tx1.value = JpnList[Num];
-        document.frmodule3.mo3tx2.value = JpnList[Num+6];
+        document.getElementById("mo3tx1").value = JpnList[Num];
+        document.getElementById("mo3tx2").value = JpnList[Num+6];
         document.getElementById("select1").addEventListener('change', function ()
         {
             var idx1 = document.getElementById("select1").selectedIndex;
@@ -387,11 +472,12 @@
             {
                 document.getElementById("select1").disabled = true;
                 document.getElementById("select2").disabled = true;
+                document.getElementById("lightmo3").style.background = "transparent radial-gradient(#b7ffb7 , #7fff00 )";
                 contGame();
             }else if(document.getElementById("select1").options[idx1].text == EngList[Num+2]){
             flg_mo3++;
             }else{
-                document.frmset.xcounter.value += "x";
+                document.getElementById("xc").value += "x";
                 misscount++;
                 if (misscount == Max_miss){Gameover();}
             }
@@ -403,11 +489,12 @@
             {
                 document.getElementById("select1").disabled = true;
                 document.getElementById("select2").disabled = true;
+                document.getElementById("lightmo3").style.background = "transparent radial-gradient(#b7ffb7 , #7fff00 )";
                 contGame();
             }else if(document.getElementById("select2").options[idx2].text == EngList[Num+4]){
             flg_mo3++;
             }else{
-                document.frmset.xcounter.value += "x";
+                document.getElementById("xc").value += "x";
                 misscount++;
                 //gameover
                         if (misscount == Max_miss){Gameover();}
@@ -466,8 +553,8 @@
             EngList[i] = dateEn[j];
             JpnList[i] = dateJp[j];
         }
-        var EngObjList = document.frmset.en;//暗記表のオブジェクトの配列を取得(英語)
-        var JpnObjList = document.frmset.jp;//暗記表のオブジェクトの配列を取得(日本語)
+        var EngObjList = document.hyo.en;//暗記表のオブジェクトの配列を取得(英語)
+        var JpnObjList = document.hyo.jp;//暗記表のオブジェクトの配列を取得(日本語)
         var dshlist=[];//一時的に保存する配列を作製
         dshlist=Shuffle(8,8);//0～8をランダム順に並べた配列を保存
         Dateshufeight(dshlist[0],dshlist[1],dshlist[2],dshlist[3],dshlist[4],dshlist[5],dshlist[6],dshlist[7]);//単語をランダムに配置する
@@ -500,7 +587,7 @@
     /*       オブジェクト表示/非表示関連          */
     /*------------------------------------------*/
     function countvisit(){
-        document.frmodule1.counter.style.display="block";
+        document.getElementById("counter").style.display="block";
         document.getElementById("xc").style.display="block";
     }
     function Modvisit()
@@ -508,6 +595,7 @@
         for(var i=0;i<20;i++){
             document.getElementById("b" + i).disabled = true;
         }
+        document.getElementById("moduleObj").style.display="block";
         document.getElementById("1module1").style.display="block";
         document.getElementById("2module2").style.display="block";
         document.getElementById("3module3").style.display="block";
@@ -518,13 +606,18 @@
         for(var i=0;i<20;i++){
             document.getElementById("b" + i).disabled = true;
         }
-        document.getElementById("1module1").style.display="none";
-        document.getElementById("2module2").style.display="none";
-        document.getElementById("3module3").style.display="none";
+        //document.getElementById("1module1").style.display="none";
+        //document.getElementById("2module2").style.display="none";
+        //document.getElementById("3module3").style.display="none";
         //document.getElementById("4module4").style.display="none";
     }
     /*------------デザイン確認用-----------------*/
     function Allvisible(){
+        var elements = document.getElementsByClassName('contents');
+        for(var i=0;i<elements.length;i++){
+            elements[i].style.display="block";
+        }
+        document.getElementById("moduleObj").style.display="block";
         document.getElementById("timeresult").style.display="block";
         document.getElementById("missresult").style.display="block";
         document.getElementById("endfase").style.display="block";

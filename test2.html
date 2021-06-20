@@ -1,91 +1,22 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/load2.css" />
     <title>Document</title>
 </head>
 <body>
-    <form name="fr">
-        <input type="text" name="xcounter" id="xc" readonly value="">
-        <input type="text" name="test" id="xc" readonly value="">
-        <input type="text" name="mo3tx1" readonly value="">
-        <select id ="select1"><option>選択肢</option></select>
-        <select id ="select2"><option>選択肢</option></select>
-        <input type="text" name="mo3tx2" readonly value="">
-    </form>
-    <script src="script/bombdate.js"></script>
-    <script>
-        var misscount = 0;//ミスの回数カウンタ
-        var Max_miss = 6;//ミス数制限
-        var flg_mo3=0;//モジュール3用フラグ
-        var datelen = dateEn.length - 7;
-        var l=Math.floor(datelen * Math.random());
-        var EngList = [];
-        var JpnList = [];
-        for (var i = 0; i < 8; i++)
-        {
-            var j=l+i;
-            EngList[i] = dateEn[j];
-            JpnList[i] = dateJp[j];
-        }
-        var srctbox1 = document.getElementById("select1");
-        var srctbox2 = document.getElementById("select2");
-        for(var i = 0; i <8; i++){
-            var option = document.createElement('option');
-            option.setAttribute('value', i);
-            option.innerHTML = EngList[i];
-            srctbox1.appendChild(option);
-        }
-        for(var i = 0; i <8; i++){
-            var option = document.createElement('option');
-            option.setAttribute('value', i);
-            option.innerHTML = EngList[i];
-            srctbox2.appendChild(option);
-        }
-        if(l%2==0){
-            mo3scr(0);
-        }else{
-            mo3scr(1);
-        }
-        if (misscount == Max_miss)
-            {
-                document.frmset.timer.value = playTime(-1);
-                endGame(); //( ゲームを終了 )
-            }
-    function mo3scr(a){
-        document.fr.mo3tx1.value = JpnList[a];
-        document.fr.mo3tx2.value = JpnList[a+6];
-        srctbox1.addEventListener('change', function ()
-        {
-            var idx1 = srctbox1.selectedIndex;
-            if(srctbox1.options[idx1].text == EngList[a+2] && flg_mo3==1)
-            {
-                alert(flg_mo3);
-            }else if(srctbox1.options[idx1].text == EngList[a+2]){
-                flg_mo3++;
-                        document.fr.test.value=flg_mo3;
-            }else{
-                document.fr.xcounter.value += "x";
-                misscount++;
-            }
-        })
-            srctbox2.addEventListener('change', function ()
-        {
-            var idx2 = srctbox2.selectedIndex;
-            if(srctbox2.options[idx2].text == EngList[a+4] && flg_mo3 ==1)
-            {
-                alert(flg_mo3);
-            }else if(srctbox2.options[idx2].text == EngList[a+4]){
-                flg_mo3++;
-                        document.fr.test.value=flg_mo3;
-            }else{
-                document.fr.xcounter.value += "x";
-                misscount++;
-            }
-    })
-    }
-    </script>
+    <!--loading画面-->
+    <div id="loading">
+        <span>
+            <a>loading</a>
+        </span>
+        <div class="bombnring-print">
+            <div class="bombnring"></div>
+            <div class="bombnring"></div>
+        </div>
+    </div>
 </body>
 </html>

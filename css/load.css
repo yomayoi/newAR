@@ -1,20 +1,21 @@
 /*----ロード画面----*/
 @font-face {
     font-family: 'azuki';
-    src: url(azuki.ttf);
+    src: url(../font/azuki.ttf);
 }
 
 /* Loading Block */
 #loading {
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     background-color: #808080;
     top: 0;
     left: 0;
     z-index: 9990;
 }
 
-#loading span{
+#loading span {
     position: absolute;
     text-align: center;
     width: 100%;
@@ -22,15 +23,10 @@
 
 }
 
-#loading a{
-    font-family:'azuki';
+#loading a {
+    font-family: 'azuki';
     font-size: 40px;
-    animation:textblor 2s linear infinite;
-}
-
-/* Hide Loading Block */
-.loaded {
-    display: none;
+    animation: textblor 2s linear infinite;
 }
 
 /*animation*/
@@ -100,26 +96,6 @@
 }
 
 .bombnring-print .bombnring:nth-child(2) {
-    width: 36.4px;
-    height: 13.52px;
-    margin: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    border: 2px solid;
-    border-radius: 20%;
-    border-bottom: transparent;
-    background-color: #808080;
-    transform: rotate(35deg)translate(1px, -45px);
-    z-index: 9995;
-    background-image: linear-gradient(-35deg, #b22222 50%, #808080 50%);
-    background-size: 200% 800%;
-    animation: bgcolor 10s ease forwards;
-    animation-delay: -350ms;
-}
-
-.bombnring-print .bombnring:nth-child(3) {
     width: 88.4px;
     height: 88.4px;
     margin: auto;
@@ -131,28 +107,53 @@
     border: 2px solid;
     background-image: linear-gradient(to top, #b22222 50%, #808080 50%);
     background-size: 200% 200%;
-    animation: bgcolor 5s ease forwards;
+    animation: bgcolor 5s forwards;
+}
+
+.bombnring-print .bombnring:nth-child(2)::after {
+    content: "";
+    position: absolute;
+    width: 36.4px;
+    height: 13.52px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    border: 2px solid;
+    border-radius: 20%;
+    border-bottom: transparent;
+    background-color: #808080;
+    transform: translate(48px, -2px)rotate(35deg);
+    background-image: linear-gradient(-35deg, #b22222 50%, #808080 50%);
+    background-size: 243% 654%;
+    animation: bgcolor 7500ms forwards;
+    animation-delay: 50ms;
 }
 
 @keyframes bgcolor {
     from {
         background-position: 0 0;
     }
+
     to {
         background-position: 0 100%;
     }
 }
-@keyframes textblor{
-    0%{
+
+@keyframes textblor {
+    0% {
         opacity: 1;
     }
-    50%{
+
+    50% {
         opacity: 0;
     }
-    100%{
+
+    100% {
         opacity: 1;
     }
 }
+
 @keyframes bombnring-print-animation {
     0% {
         transform: translate(0px, 0px)

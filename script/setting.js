@@ -28,7 +28,6 @@ var cr = false;
 var datelen = dateEn.length - 7;
 var l = Math.floor(datelen * Math.random());
 
-
 /*------------------------------------------*/
 /*              タイマー処理                 */
 /*------------------------------------------*/
@@ -46,8 +45,8 @@ function strTime(time)
     {
         clearInterval(memo_timer);
         document.getElementById("kaijoBtn").style.display = "block";
-        document.getElementById("ankihyo").style.display = "none";
-        f_str2 = "制限時間：" + kaijotime + "秒";
+        //document.getElementById("ankihyo").style.display = "none";
+        f_str2 = " ";
     }
     return f_str2;
 }
@@ -64,10 +63,10 @@ function playTime(time)
         f_str = f_str.substr(0, 5);
     }else if (f_str < 0)
     {
-        targetJp = 1; //( 正解の数字をリセット )
+        targetJp = 1;
         f_str = "GameOver";
         Gameover();
         endGame(); //( ゲームを終了 )
-    } else {alert("playTime ERROR")}
+    }
     return f_str;
 }
